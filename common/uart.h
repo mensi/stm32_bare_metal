@@ -2,10 +2,14 @@
 #define _UART_H_
 
 #include "pins.h"
+#include "snprintf.h"
 
 void uart_setup(USART_TypeDef * base, int baud);
 void uart_putchar(USART_TypeDef * base, char ch);
 void uart_putline(USART_TypeDef * base, char * str);
+void uart_printf(USART_TypeDef * base, const char *fmt, ...);
+
+void usart1_printf(const char *fmt, ...);
 
 
 /*

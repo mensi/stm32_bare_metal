@@ -55,3 +55,35 @@ void uart_putline(USART_TypeDef * base, char * str) {
   uart_putchar(base, '\r');
   uart_putchar(base, '\n');
 }
+
+void uart_printf(USART_TypeDef * base, const char *fmt, ...) {
+  size_t ret = 0, count = 200;
+  char str[count];
+  str[0] = '\0';
+	
+  va_list ap;
+	va_start(ap, fmt);
+	ret = vsnprintf(str, count, fmt, ap);
+	va_end(ap);
+
+  uart_putline(base, str);
+  if (ret > count) {
+    uart_putline(base, "PRINTF OVERFLOW");
+  }
+}
+
+void usart1_printf(const char *fmt, ...) {
+  size_t ret = 0, count = 200;
+  char str[count];
+  str[0] = '\0';
+	
+  va_list ap;
+	va_start(ap, fmt);
+	ret = vsnprintf(str, count, fmt, ap);
+	va_end(ap);
+
+  usart1_putline(str);
+  if (ret > count) {
+    usart1_putline("PRINTF OVERFLOW");
+  }
+}
