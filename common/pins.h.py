@@ -65,6 +65,7 @@ def generate_contents():
         lines.append('#define PIN_GPIO_CRX_MODE{0}_1 GPIO_{1}_MODE{0}_1'.format(idx, 'CRL' if idx < 8 else 'CRH'))
 
     lines += section('Pin output configuration / setup')
+    lines.append('#define pin_set_input_analog(port, idx) GPIO##port->PIN_GPIO_CRX##idx = (GPIO##port->PIN_GPIO_CRX##idx & ~( PIN_GPIO_CRX_CNF##idx  | PIN_GPIO_CRX_MODE##idx ))')
     lines.append('#define pin_set_output_50mhz(port, idx) GPIO##port->PIN_GPIO_CRX##idx = (GPIO##port->PIN_GPIO_CRX##idx & ~( PIN_GPIO_CRX_CNF##idx  | PIN_GPIO_CRX_MODE##idx )) | (PIN_GPIO_CRX_MODE##idx##_1 | PIN_GPIO_CRX_MODE##idx##_0)')
     lines.append('#define pin_set_output_50mhz_alt(port, idx) GPIO##port->PIN_GPIO_CRX##idx = (GPIO##port->PIN_GPIO_CRX##idx & ~( PIN_GPIO_CRX_CNF##idx  | PIN_GPIO_CRX_MODE##idx )) | (PIN_GPIO_CRX_MODE##idx##_1 | PIN_GPIO_CRX_MODE##idx##_0 | PIN_GPIO_CRX_CNF##idx##_1)')
 

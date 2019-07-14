@@ -149,6 +149,7 @@
 #define PIN_GPIO_CRX_MODE15_1 GPIO_CRH_MODE15_1
 
 // Pin output configuration / setup
+#define pin_set_input_analog(port, idx) GPIO##port->PIN_GPIO_CRX##idx = (GPIO##port->PIN_GPIO_CRX##idx & ~( PIN_GPIO_CRX_CNF##idx  | PIN_GPIO_CRX_MODE##idx ))
 #define pin_set_output_50mhz(port, idx) GPIO##port->PIN_GPIO_CRX##idx = (GPIO##port->PIN_GPIO_CRX##idx & ~( PIN_GPIO_CRX_CNF##idx  | PIN_GPIO_CRX_MODE##idx )) | (PIN_GPIO_CRX_MODE##idx##_1 | PIN_GPIO_CRX_MODE##idx##_0)
 #define pin_set_output_50mhz_alt(port, idx) GPIO##port->PIN_GPIO_CRX##idx = (GPIO##port->PIN_GPIO_CRX##idx & ~( PIN_GPIO_CRX_CNF##idx  | PIN_GPIO_CRX_MODE##idx )) | (PIN_GPIO_CRX_MODE##idx##_1 | PIN_GPIO_CRX_MODE##idx##_0 | PIN_GPIO_CRX_CNF##idx##_1)
 #endif
