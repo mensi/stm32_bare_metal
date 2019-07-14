@@ -159,11 +159,13 @@ void __startup(void) {
     RCC->CFGR |= (
         RCC_CFGR_PPRE1_DIV2 // APB1: Divide by 2
       | RCC_CFGR_USBPRE  // Do not divide PLL clock for USB
+      | RCC_CFGR_ADCPRE_DIV4 // ADC: Divide by 4
     );
   #elif F_CPU == 72000000
     FLASH->ACR |= FLASH_ACR_LATENCY_2; // 2 wait states for flash
     RCC->CFGR |= (
-      RCC_CFGR_PPRE1_DIV2 // APB1: Divide by 2
+        RCC_CFGR_PPRE1_DIV2 // APB1: Divide by 2
+      | RCC_CFGR_ADCPRE_DIV6 // ADC: Divide by 6
     );
   #else
     #error "Unknown F_CPU value"
