@@ -17,11 +17,14 @@ PROJECT_NAME = $(notdir $(CURDIR))
 # Build directory, where we put .o etc.
 BUILDDIR = $(abspath $(CURDIR)/build)
 
+# Top level directory with common/, src/ etc.
+BASEDIR = $(abspath $(CURDIR)/../..)
+
 # Directory with stlink
-LOADERPATH = $(abspath $(CURDIR)/../../stlink)
+LOADERPATH = $(abspath $(BASEDIR)/stlink)
 
 # Common directory
-COMMONDIR =  $(abspath $(CURDIR)/../../common)
+COMMONDIR =  $(abspath $(BASEDIR)/common)
 
 # Path to he arm-none-eabi compiler
 DETECTCOMPILER = $(shell command -v arm-none-eabi-gcc 2> /dev/null)
@@ -81,6 +84,10 @@ build: $(BUILDDIR)/$(PROJECT_NAME).elf
 
 hex: $(BUILDDIR)/$(PROJECT_NAME).hex
 
+load_sipeed: $(BUILDDIR)/$(PROJECT_NAME).elf
+	@echo "Running OpenOCD with sipeed.cfg"
+	openocd -f $(BASEDIR)/extra/sipeed.cfg -c "program $< verify reset exit"
+
 load: $(BUILDDIR)/$(PROJECT_NAME).hex $(LOADERPATH)/build/Release/st-flash
 	@echo "Running st-flash."
 	@$(LOADERPATH)/build/Release/st-flash --format=ihex --flash=64k write $<
@@ -124,4 +131,4 @@ clean:
 	@echo Cleaning...
 	@rm -rf "$(BUILDDIR)"
 
-.PHONY: all build hex load clean generated
+.PHONY: all build hex load load_sipeed clean generated
